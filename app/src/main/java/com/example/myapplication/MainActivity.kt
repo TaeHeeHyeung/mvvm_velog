@@ -2,54 +2,83 @@ package com.example.myapplication
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.myapplication.databinding.ActivityMainBinding
-import com.example.myapplication.viewmodel.LoginViewModel
+import com.example.myapplication.repository.LOGIN_SUCCESS
+import com.example.myapplication.util.AndroidUtils
+import com.example.myapplication.view_model.LoginViewModel
 
 
-// 설계
-// 1. 입력: 아이디, 비밀번호
-// 2. 로그인 기능: 네트워크 연결처리 => suspend Thread
-// 3.
 class MainActivity : AppCompatActivity() {
     private val TAG: String? = MainActivity::class.java.simpleName
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d(TAG, AndroidUtils.TEST_LOG + "onCreate")
+        
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-        // setContentView(R.layout.activity_main)
-        val binding = ActivityMainBinding.inflate(layoutInflater)
         val root = binding.root
         setContentView(root)
-        // 회전 테스트 시 로그 가 어떤식으로 변하는가 확인하기 위한 코드 추가 예정
+
+        //
         if (savedInstanceState == null) {
-            Log.d(TAG, "onCreate savedInstanceState == null")
-        } else {
-            Log.d(TAG, "onCreate savedInstanceState != null")
+            Log.d(TAG, AndroidUtils.TEST_LOG + "onCreate savedInstanceState null")
+        }
+        // 실행
+        // 1. 회전 시 onDestroy 호출 후
+        // 2. 시스템이 앱을 종료 후 실행
+        else {
+            Log.d(TAG, AndroidUtils.TEST_LOG + "onCreate savedInstanceState exists")
         }
 
         // 뷰 모델 선언
         val loginViewModel = ViewModelProvider(this)[LoginViewModel::class.java]
-
-        // 뷰 모델 옵저버 선언
-        loginViewModel.mutableLoginResponse.observe(this, Observer {
-            if (it.username == "hth0893" && it.passwd == "1q2w3e4r") {
-                Log.d(TAG, "successLogin")
-                binding.tvIsLogin.text = "로그인 success"
-            } else {
-                binding.tvIsLogin.text = "로그인 fail"
-            }
-        })
-
-        // val id = "hth0893"
-        // val pass = "1q2w3e4r"
-
-        // 로그인 기능 실행
-        binding.btnLogin.setOnClickListener { view ->
-            loginViewModel.login(binding.et1.text?.toString(), binding.et2.text?.toString())
+        binding.apply {
+            lifecycleOwner= this@MainActivity
+            this.loginViewModel = loginViewModel;
         }
+        binding.loginBeforeInclude.apply {
+            lifecycleOwner= this@MainActivity
+            this.loginViewModel = loginViewModel;
+        }
+        binding.loginAfterInclude.apply {
+            lifecycleOwner= this@MainActivity
+            this.loginViewModel = loginViewModel;
+        }
+        // 로그인 기능 실행
+        binding.loginBeforeInclude.btnLogin.setOnClickListener {
+            loginViewModel.login(binding.loginBeforeInclude.etLoginId.text?.toString(), binding.loginBeforeInclude.etLoginPass.text?.toString())
+        }
+    }
+
+    override fun onStart() {
+        Log.d(TAG, AndroidUtils.TEST_LOG + "onStart")
+
+        super.onStart()
+    }
+
+    override fun onPause() {
+        Log.d(TAG, AndroidUtils.TEST_LOG + "onPause")
+
+        super.onPause()
+    }
+
+    override fun onResume() {
+        Log.d(TAG, AndroidUtils.TEST_LOG + "onResume")
+
+        super.onResume()
+    }
+
+    override fun onDestroy() {
+        Log.d(TAG, AndroidUtils.TEST_LOG + "onDestroy")
+
+        super.onDestroy()
     }
 }
 

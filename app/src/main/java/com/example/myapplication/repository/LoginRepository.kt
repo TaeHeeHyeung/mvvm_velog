@@ -1,8 +1,10 @@
 package com.example.myapplication.repository
 
-import com.google.gson.Gson
+import com.example.myapplication.request.LoginRequest
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.lang.Exception
+import java.util.*
 
 sealed class Result<out R> {
     data class Success<out T>(val data: T) : Result<T>()
@@ -11,6 +13,7 @@ sealed class Result<out R> {
 
 class LoginRepository {
     constructor()
+
     /*
     constructor(responseParser: LoginResponseParser)
      Function that makes the network request, blocking the current thread
@@ -33,13 +36,31 @@ class LoginRepository {
     }
     */
     //suspend: 백그라운드 쓰레드 처리 가정
-    suspend fun makeLoginRequest(jsonBody: String): Result<LoginResponse> {
+    suspend fun makeLoginRequest(loginRequest: LoginRequest): Result<LoginResponse> {
         return withContext(Dispatchers.IO) {
             try {
-                Thread.sleep(2000)
-                val loginResponse = Gson().fromJson(jsonBody, LoginResponse::class.java)
-                Result.Success(loginResponse)
-            } catch (e: java.lang.Exception) {
+                // 1~ 1.5
+                val random = Random()
+                val randomValue: Double = 1 + random.nextDouble() * 0.5
+                Thread.sleep((1000 * randomValue).toLong())
+
+                val responseData: LoginResponse
+                val loginId = "hth0893"
+                val passWd = "1q2w3e4r"
+                responseData =
+                    if (loginRequest.userId.equals(loginId) && loginRequest.passWd.equals(passWd)) {
+                        LoginResponse(
+                            LOGIN_SUCCESS,
+                            "memberId",
+                        )
+                    } else {
+                        LoginResponse(
+                            LOGIN_FAIL,
+                            "",
+                        )
+                    }
+                Result.Success(responseData)
+            } catch (e: Exception) {
                 Result.Error(e);
             }
         }
