@@ -11,9 +11,8 @@ import com.example.myapplication.request.LoginRequest
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class LoginViewModel : ViewModel() {
 
-    private val loginRepository: LoginRepository = LoginRepository()
+class LoginViewModel(private val loginRepository: LoginRepository = LoginRepository()) : ViewModel() {
 
     // 로그인 상태 변수를 가지고 있음
     val mutableLiveDataLoginResponse = MutableLiveData(

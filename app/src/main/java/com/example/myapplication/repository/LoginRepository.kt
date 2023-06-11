@@ -12,7 +12,6 @@ sealed class Result<out R> {
 }
 
 class LoginRepository {
-    constructor()
 
     /*
     constructor(responseParser: LoginResponseParser)

@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">My Application</string>
     <string name="need_login">로그인 해주세요.</string>
-    <string name="success_login">님 환영합니다.</string>
+    <string name="success_login">%1$s 님 환영합니다.</string>
     <string name="success_fail">로그인 실패</string>
     <string name="btn_login">로그인</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -2,25 +2,36 @@ package com.example.myapplication
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.TextUtils
 import android.util.Log
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.commit
+import androidx.fragment.app.replace
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.example.myapplication.databinding.ActivityMainBinding
+import com.example.myapplication.fragment.LoginAfterFragment
+import com.example.myapplication.fragment.LoginBeforeFragment
 import com.example.myapplication.repository.LOGIN_SUCCESS
 import com.example.myapplication.util.AndroidUtils
 import com.example.myapplication.view_model.LoginViewModel
 
+// 공부: Fragment Activity ViewModel 공유 구현
 
+// Material 아이콘 : https://material.io/icons/
+// Nounproject : https://thenounproject.com/
+
+// todo
+//  구현 중: naviHostFragment
 class MainActivity : AppCompatActivity() {
     private val TAG: String? = MainActivity::class.java.simpleName
     private lateinit var binding: ActivityMainBinding
+    lateinit var loginViewModel: LoginViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d(TAG, AndroidUtils.TEST_LOG + "onCreate")
-        
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         val root = binding.root
@@ -31,30 +42,39 @@ class MainActivity : AppCompatActivity() {
             Log.d(TAG, AndroidUtils.TEST_LOG + "onCreate savedInstanceState null")
         }
         // 실행
-        // 1. 회전 시 onDestroy 호출 후
-        // 2. 시스템이 앱을 종료 후 실행
+        // onDestroy 호출 후 재실행 시
         else {
             Log.d(TAG, AndroidUtils.TEST_LOG + "onCreate savedInstanceState exists")
         }
 
         // 뷰 모델 선언
-        val loginViewModel = ViewModelProvider(this)[LoginViewModel::class.java]
+        loginViewModel = ViewModelProvider(this)[LoginViewModel::class.java]
+        // 뷰 모델, 데이터 바인딩 연결
         binding.apply {
-            lifecycleOwner= this@MainActivity
+            lifecycleOwner = this@MainActivity
             this.loginViewModel = loginViewModel;
         }
-        binding.loginBeforeInclude.apply {
-            lifecycleOwner= this@MainActivity
-            this.loginViewModel = loginViewModel;
-        }
-        binding.loginAfterInclude.apply {
-            lifecycleOwner= this@MainActivity
-            this.loginViewModel = loginViewModel;
-        }
-        // 로그인 기능 실행
-        binding.loginBeforeInclude.btnLogin.setOnClickListener {
-            loginViewModel.login(binding.loginBeforeInclude.etLoginId.text?.toString(), binding.loginBeforeInclude.etLoginPass.text?.toString())
-        }
+
+        // 로그인 뷰 모델 데이터 관찰
+        loginViewModel.mutableLiveDataLoginResponse.observe(this, Observer {
+            Log.d(TAG, AndroidUtils.TEST_LOG + it.toStringCheckState())
+
+            // 로그인 성공 => 프레그먼트 변경 (로그인 완료)
+            if (it.checkState == LOGIN_SUCCESS) {
+//                supportFragmentManager.commit {
+//                    supportFragmentManager.findFragmentById(R.id.fragment_container_view)
+//                    replace<LoginAfterFragment>(R.id.fragment_container_view)
+//                }
+            }
+            // 로그인 실패 => 프래그먼트 변경 (로그인 실패)
+            else {
+//                supportFragmentManager.commit {
+//                    replace<LoginBeforeFragment>(R.id.fragment_container_view)
+//                }
+            }
+            //
+        })
+
     }
 
     override fun onStart() {

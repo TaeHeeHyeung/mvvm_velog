@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
@@ -15,39 +14,21 @@
             type="com.example.myapplication.view_model.LoginViewModel" />
     </data>
 
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".MainActivity">
+        android:layout_height="match_parent">
 
 
-        <RelativeLayout
-            android:id="@+id/view_login"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
 
-            <include
-                android:id="@+id/login_before_include"
-                layout="@layout/login_before"
-                android:visibility='@{TextUtils.isEmpty(loginViewModel.mutableLiveDataLoginResponse.memberId) ?View.VISIBLE :View.GONE}'
-                />
-
-
-            <include
-                android:id="@+id/login_after_include"
-                layout="@layout/login_after"
-                android:visibility='@{TextUtils.isEmpty(loginViewModel.mutableLiveDataLoginResponse.memberId) ?View.GONE :View.VISIBLE}'
-                />
-
-        </RelativeLayout>
-
-        <TextView
-            android:id="@+id/tv_test"
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fragment_container_view"
+            android:name="com.example.myapplication.fragment.LoginBeforeFragment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/view_login"
-            android:text="@{loginViewModel.mutableLiveDataLoginResponse.memberId, default=tt}" />
+            android:layout_alignParentEnd="true"
+            app:navGraph="@navigation/navi_graph"
+            tools:layout="@layout/fragment_main" />
 
     </RelativeLayout>
-
 </layout>

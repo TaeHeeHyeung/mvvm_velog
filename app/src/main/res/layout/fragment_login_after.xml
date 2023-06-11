@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="android.text.TextUtils" />
+
+        <variable
+            name="loginViewModel"
+            type="com.example.myapplication.view_model.LoginViewModel" />
+    </data>
+
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility='@{TextUtils.isEmpty(loginViewModel.mutableLiveDataLoginResponse.memberId) ?View.GONE :View.VISIBLE}'>
+
+            <TextView
+                android:id="@+id/tv_login_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/success_login" />
+        </RelativeLayout>
+
+</layout>
