@@ -1,17 +1,14 @@
 package com.example.myapplication
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.commit
-import androidx.fragment.app.replace
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.NavHostFragment
 import com.example.myapplication.databinding.ActivityMainBinding
-import com.example.myapplication.fragment.LoginAfterFragment
-import com.example.myapplication.fragment.LoginBeforeFragment
 import com.example.myapplication.repository.LOGIN_SUCCESS
 import com.example.myapplication.util.AndroidUtils
 import com.example.myapplication.view_model.LoginViewModel
@@ -55,6 +52,30 @@ class MainActivity : AppCompatActivity() {
             this.loginViewModel = loginViewModel;
         }
 
+
+        //메뉴 선택
+        binding.ivMenu.setOnClickListener {
+            val navHostFragment =
+                supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+            val navController = navHostFragment.navController
+            navController.navigate(R.id.action_blankFragment_to_myPageFragment)
+
+        }
+
+        val onBackPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val navHostFragment =
+                    supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+                val navController = navHostFragment.navController
+                val result = navController.navigateUp()
+                if (!result) {
+                    finish()
+                }
+
+            }
+        }
+        onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
+
         // 로그인 뷰 모델 데이터 관찰
         loginViewModel.mutableLiveDataLoginResponse.observe(this, Observer {
             Log.d(TAG, AndroidUtils.TEST_LOG + it.toStringCheckState())
@@ -75,6 +96,14 @@ class MainActivity : AppCompatActivity() {
             //
         })
 
+    }
+
+    fun handleOnBackPressed(): Boolean {
+        //Do your job here
+        //use next line if you just need navigate up
+        //NavHostFragment.findNavController(this).navigateUp();
+        //Log.e(getClass().getSimpleName(), "handleOnBackPressed");
+        return true
     }
 
     override fun onStart() {

@@ -9,13 +9,12 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModel
-import com.example.myapplication.MainActivity
 import com.example.myapplication.R
-import com.example.myapplication.databinding.FragmentLoginBeforeBinding
+import com.example.myapplication.databinding.FragmentMyPageBinding
 import com.example.myapplication.view_model.LoginViewModel
 
 // 참고: https://developer.android.com/kotlin/ktx?hl=ko#fragment
-class LoginBeforeFragment : Fragment() {
+class MyPageFragment : Fragment() {
 
 
     // private lateinit var loginViewModel: LoginViewModel
@@ -33,19 +32,20 @@ class LoginBeforeFragment : Fragment() {
     ): View {
 
         // DataBinding 설정
-        val binding: FragmentLoginBeforeBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_login_before, container, false)
+//        val binding: FragmentLoginBeforeBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_login_before, container, false)
+        val binding: FragmentMyPageBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_my_page, container, false)
 
         // DataBinding ViewModel 데이터 연결
         binding.apply {
-            lifecycleOwner = this@LoginBeforeFragment
+//            lifecycleOwner = this@LoginBeforeFragment
             //dataBinding 변수 대입
-            this.loginViewModel = loginViewModel
+//            this.loginViewModel = loginViewModel
         }
 
         // 로그인 실행
-        binding.btnLogin.setOnClickListener {
-            activityViewModel.login(binding.etLoginId.text?.toString(), binding.etLoginPass.text?.toString())
-        }
+//        binding.btnLogin.setOnClickListener {
+//            activityViewModel.login(binding.etLoginId.text?.toString(), binding.etLoginPass.text?.toString())
+//        }
 
         return binding.root
     }
@@ -54,4 +54,7 @@ class LoginBeforeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
     }
+
+
+
 }

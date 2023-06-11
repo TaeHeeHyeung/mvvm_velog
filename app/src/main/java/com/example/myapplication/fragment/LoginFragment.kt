@@ -16,7 +16,7 @@ import com.example.myapplication.view_model.LoginViewModel
 //private const val ARG_PARAM1 = "param1"
 //private const val ARG_PARAM2 = "param2"
 
-class LoginAfterFragment : Fragment() {
+class LoginFragment : Fragment() {
 //    private var param1: String? = null
 //    private var param2: String? = null
 
@@ -46,7 +46,7 @@ class LoginAfterFragment : Fragment() {
         // Inflate the layout for this fragment
         val binding: FragmentLoginAfterBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_login_after, container, false)
         binding.apply {
-            lifecycleOwner = this@LoginAfterFragment
+            lifecycleOwner = this@LoginFragment
             this.loginViewModel = loginViewModel;
         }
 

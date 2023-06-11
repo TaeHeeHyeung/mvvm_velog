@@ -1,5 +1,13 @@
 package com.example.myapplication.repository
 
+import android.text.TextUtils
+import androidx.annotation.StringRes
+import androidx.databinding.BaseObservable
+import androidx.databinding.Bindable
+import androidx.databinding.Observable
+import com.example.myapplication.R
+import com.example.myapplication.application.ApplicationTest
+
 // 로그인 상태 변수
 // 로그인 필요
 const val LOGIN_NEED: Int = 0
@@ -19,13 +27,25 @@ const val LOGIN_CHECK_PASS: Int = 4
 class LoginResponse(
     var checkState: Int?,
     var memberId: String?,
-) {
+) : BaseObservable() {
 
     fun toStringCheckState(): String {
-        if (checkState == LOGIN_SUCCESS) {
-            return "loginSuccess"
-        }  else {
-            return "loginFail"
+        return if (checkState == LOGIN_SUCCESS) {
+            "loginSuccess"
+        } else {
+            "loginFail"
+        }
+    }
+
+    @Bindable
+    fun getWelcomeStr(): String {
+        return if (!TextUtils.isEmpty(memberId)) {
+            ApplicationTest.instance.resources.getString(
+                R.string.success_login,
+                memberId
+            )
+        } else {
+            ApplicationTest.getResource().getString(R.string.need_login)
         }
     }
 
