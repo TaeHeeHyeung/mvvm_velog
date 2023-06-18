@@ -1,17 +1,21 @@
 package com.example.myapplication
 
 import android.R.attr.button
+import android.content.Context
 import android.icu.lang.UCharacter.BidiPairedBracketType.OPEN
 import android.os.Bundle
 import android.transition.AutoTransition
 import android.transition.TransitionManager
+import android.util.AttributeSet
 import android.util.Log
 import android.view.Gravity
+import android.view.View
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import androidx.core.view.marginLeft
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -40,9 +44,11 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setContentView(binding.root)
 
+        //초기화
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
-
+        // 드로우 뷰 화면 가득 채우기
+        binding.navigationView.layoutParams.width = resources.displayMetrics.widthPixels
         //
         if (savedInstanceState == null) {
             Log.d(TAG, AndroidUtils.TEST_LOG + "onCreate savedInstanceState null")
@@ -73,10 +79,10 @@ class MainActivity : AppCompatActivity() {
 //        val navHeader = binding.navigationView.getHeaderView(0)
 //        val ivMenu = navHeader.findViewById<ImageView>(R.id.iv_menu);
 
+
+
         binding.ivMenu.setOnClickListener {
-            if (binding.drawerLayout.isDrawerOpen(GravityCompat.END)) {
-                binding.drawerLayout.closeDrawer(GravityCompat.END);
-            } else {
+            if (!binding.drawerLayout.isDrawerOpen(GravityCompat.END)) {
                 binding.drawerLayout.openDrawer(GravityCompat.END);
             }
         }
@@ -84,6 +90,12 @@ class MainActivity : AppCompatActivity() {
         // 하드웨어 뒤로가기 콜백
         val onBackPressedCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
+                //메뉴 열려있으면 닫기
+                if (binding.drawerLayout.isDrawerOpen(GravityCompat.END)) {
+                    binding.drawerLayout.closeDrawer(GravityCompat.END)
+                    return
+                }
+
                 //이전 프래그먼트 개수
                 val backStackCount = navHostFragment.childFragmentManager.backStackEntryCount
                 if (backStackCount >= 1) {
@@ -104,6 +116,9 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    override fun onCreateView(name: String, context: Context, attrs: AttributeSet): View? {
+        return super.onCreateView(name, context, attrs)
+    }
     fun handleOnBackPressed(): Boolean {
         //Do your job here
         //use next line if you just need navigate up

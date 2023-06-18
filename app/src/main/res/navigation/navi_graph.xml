@@ -3,18 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:name="com.example.myapplication.fragment.BlankFragment"
-    app:startDestination="@id/blankFragment">
-
-    <fragment
-        android:id="@+id/blankFragment"
-        android:name="com.example.myapplication.fragment.BlankFragment"
-        tools:layout="@layout/fragment_blank">
-        <action
-            android:id="@+id/action_blankFragment_to_myPageFragment"
-            app:destination="@+id/myPageFragment"
-            app:enterAnim="@anim/animation_enter_"
-            app:exitAnim="@anim/animation_exit" />
-    </fragment>
+    app:startDestination="@id/myPageFragment">
 
     <fragment
         android:id="@+id/myPageFragment"

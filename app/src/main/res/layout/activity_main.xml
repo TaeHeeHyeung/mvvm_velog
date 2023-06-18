@@ -14,34 +14,15 @@
             type="com.example.myapplication.view_model.LoginViewModel" />
     </data>
 
-
-    <!--drawerLayout-->
-    <androidx.drawerlayout.widget.DrawerLayout
-        android:id="@+id/drawer_layout"
+    <!--부모 뷰-->
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:openDrawer="end">
+        android:layout_height="match_parent">
         <!-- 메인화면 -->
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-            <ImageView
-                android:id="@+id/iv_menu"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_alignParentEnd="true"
-                android:adjustViewBounds="true"
-                android:paddingRight="10dp"
-                android:src="@drawable/menu" />
-        </androidx.appcompat.widget.Toolbar>
-
         <RelativeLayout
             android:id="@+id/view_parent"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
-
 
             <TextView
                 android:layout_width="wrap_content"
@@ -49,24 +30,58 @@
                 android:layout_centerInParent="true"
                 android:text="@string/main" />
         </RelativeLayout>
-        <!--네비게이션 뷰 -->
-        <com.google.android.material.navigation.NavigationView
-            android:id="@+id/navigation_view"
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="end"
-            android:fitsSystemWindows="true">
 
-            <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/nav_host_fragment"
-                android:name="androidx.navigation.fragment.NavHostFragment"
+        <!--drawerLayout-->
+        <androidx.drawerlayout.widget.DrawerLayout
+            android:id="@+id/drawer_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            tools:openDrawer="end">
+
+            <!--툴바-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <!--RelativeLayout 으로 감싸줘야 상단에 배치된다.-->
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+
+                    <ImageView
+                        android:id="@+id/iv_menu"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="right"
+                        android:adjustViewBounds="true"
+                        android:paddingRight="10dp"
+                        android:src="@drawable/menu" />
+                </androidx.appcompat.widget.Toolbar>
+
+            </RelativeLayout>
+
+            <!--네비게이션 뷰 -->
+            <com.google.android.material.navigation.NavigationView
+                android:id="@+id/navigation_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:navGraph="@navigation/navi_graph" />
 
-        </com.google.android.material.navigation.NavigationView>
+                android:layout_gravity="end">
+
+                <androidx.fragment.app.FragmentContainerView
+                    android:id="@+id/nav_host_fragment"
+                    android:name="androidx.navigation.fragment.NavHostFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:navGraph="@navigation/navi_graph" />
+
+            </com.google.android.material.navigation.NavigationView>
 
 
-    </androidx.drawerlayout.widget.DrawerLayout>
+        </androidx.drawerlayout.widget.DrawerLayout>
+
+
+    </RelativeLayout>
 
 </layout>
