@@ -8,20 +8,24 @@
     <fragment
         android:id="@+id/blankFragment"
         android:name="com.example.myapplication.fragment.BlankFragment"
-        android:label="fragment_blank"
         tools:layout="@layout/fragment_blank">
         <action
             android:id="@+id/action_blankFragment_to_myPageFragment"
-            app:destination="@id/myPageFragment" />
+            app:destination="@+id/myPageFragment"
+            app:enterAnim="@anim/animation_enter_"
+            app:exitAnim="@anim/animation_exit" />
     </fragment>
 
     <fragment
         android:id="@+id/myPageFragment"
         android:name="com.example.myapplication.fragment.MyPageFragment"
-        tools:layout="@layout/fragment_my_page" >
+        android:label="myPageFragment"
+        tools:layout="@layout/fragment_my_page">
         <action
             android:id="@+id/action_myPageFragment_to_loginPageFragment"
-            app:destination="@id/loginPageFragment" />
+            app:destination="@id/loginPageFragment"
+            app:enterAnim="@anim/animation_enter_"
+            app:exitAnim="@anim/animation_exit" />
     </fragment>
 
     <fragment

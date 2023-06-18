@@ -1,17 +1,25 @@
 package com.example.myapplication
 
+import android.R.attr.button
+import android.icu.lang.UCharacter.BidiPairedBracketType.OPEN
 import android.os.Bundle
+import android.transition.AutoTransition
+import android.transition.TransitionManager
 import android.util.Log
+import android.view.Gravity
+import android.widget.ImageView
+import android.widget.RelativeLayout
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import com.example.myapplication.databinding.ActivityMainBinding
-import com.example.myapplication.repository.LOGIN_SUCCESS
 import com.example.myapplication.util.AndroidUtils
 import com.example.myapplication.view_model.LoginViewModel
+
 
 // 공부: Fragment Activity ViewModel 공유 구현
 
@@ -30,9 +38,10 @@ class MainActivity : AppCompatActivity() {
         Log.d(TAG, AndroidUtils.TEST_LOG + "onCreate")
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        setContentView(binding.root)
 
-        val root = binding.root
-        setContentView(root)
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navController = navHostFragment.navController
 
         //
         if (savedInstanceState == null) {
@@ -54,46 +63,43 @@ class MainActivity : AppCompatActivity() {
 
 
         //메뉴 선택
-        binding.ivMenu.setOnClickListener {
-            val navHostFragment =
-                supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-            val navController = navHostFragment.navController
-            navController.navigate(R.id.action_blankFragment_to_myPageFragment)
+        /*   binding.ivMenu.setOnClickListener {
+               val backStackCount = navHostFragment.childFragmentManager.backStackEntryCount
+               if (backStackCount == 0) {
+                   navController.navigate(R.id.action_blankFragment_to_myPageFragment)
+               }
+           }*/
+//        val navHeader = binding.navigationView.inflateHeaderView(R.layout.nav_header_main);
+//        val navHeader = binding.navigationView.getHeaderView(0)
+//        val ivMenu = navHeader.findViewById<ImageView>(R.id.iv_menu);
 
+        binding.ivMenu.setOnClickListener {
+            if (binding.drawerLayout.isDrawerOpen(GravityCompat.END)) {
+                binding.drawerLayout.closeDrawer(GravityCompat.END);
+            } else {
+                binding.drawerLayout.openDrawer(GravityCompat.END);
+            }
         }
 
+        // 하드웨어 뒤로가기 콜백
         val onBackPressedCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                val navHostFragment =
-                    supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-                val navController = navHostFragment.navController
-                val result = navController.navigateUp()
-                if (!result) {
+                //이전 프래그먼트 개수
+                val backStackCount = navHostFragment.childFragmentManager.backStackEntryCount
+                if (backStackCount >= 1) {
+                    val result = navController.navigateUp()
+                } else {
                     finish()
                 }
 
             }
         }
+        // 하드웨어 뒤로가기 콜백 등록
         onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
 
         // 로그인 뷰 모델 데이터 관찰
         loginViewModel.mutableLiveDataLoginResponse.observe(this, Observer {
-            Log.d(TAG, AndroidUtils.TEST_LOG + it.toStringCheckState())
 
-            // 로그인 성공 => 프레그먼트 변경 (로그인 완료)
-            if (it.checkState == LOGIN_SUCCESS) {
-//                supportFragmentManager.commit {
-//                    supportFragmentManager.findFragmentById(R.id.fragment_container_view)
-//                    replace<LoginAfterFragment>(R.id.fragment_container_view)
-//                }
-            }
-            // 로그인 실패 => 프래그먼트 변경 (로그인 실패)
-            else {
-//                supportFragmentManager.commit {
-//                    replace<LoginBeforeFragment>(R.id.fragment_container_view)
-//                }
-            }
-            //
         })
 
     }
