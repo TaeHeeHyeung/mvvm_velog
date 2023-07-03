@@ -13,19 +13,23 @@
             type="com.example.myapplication.view_model.LoginViewModel" />
     </data>
 
-
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <RelativeLayout
+            android:id="@+id/btn_back"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@color/LightCyan" />
+
+
+        <TextView
+            android:id="@+id/tv_login_state"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:visibility='@{TextUtils.isEmpty(loginViewModel.mutableLiveDataLoginResponse.memberId) ?View.GONE :View.VISIBLE}'>
-
-            <TextView
-                android:id="@+id/tv_login_state"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/success_login" />
-        </RelativeLayout>
+            android:layout_below="@+id/btn_back"
+            android:text="@string/success_login" />
+    </RelativeLayout>
 
 </layout>

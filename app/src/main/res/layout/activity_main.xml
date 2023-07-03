@@ -31,14 +31,15 @@
                 android:text="@string/main" />
         </RelativeLayout>
 
-        <!--drawerLayout-->
+
+        <!--drawerLayout
+        fitsSystemWindows: actionbar statusbar 에 가려질 수 있음
+        -->
         <androidx.drawerlayout.widget.DrawerLayout
             android:id="@+id/drawer_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fitsSystemWindows="true"
             tools:openDrawer="end">
-
             <!--툴바-->
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -66,7 +67,6 @@
                 android:id="@+id/navigation_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-
                 android:layout_gravity="end">
 
                 <androidx.fragment.app.FragmentContainerView

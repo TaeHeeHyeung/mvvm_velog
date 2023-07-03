@@ -12,26 +12,18 @@
     <color name="Blue50">#E3F2FD</color>
     <color name="Blue100">#BBDEFB</color>
     <color name="Blue200">#90CAF9</color>
-<!--    300
-    #64B5F6
-    400
-    #42A5F5
-    500
-    #2196F3
-    600
-    #1E88E5
-    700
-    #1976D2
-    800
-    #1565C0
-    900
-    #0D47A1
-    A100
-    #82B1FF
-    A200
-    #448AFF
-    A400
-    #2979FF
-    A700
-    #2962FF-->
+
+    <color name="LightBlue">#ADD8E6</color>
+    <color name="LightCoral">#F08080</color>
+    <color name="LightCyan">#E0FFFF</color>
+    <color name="LightGoldenrodYellow">#FAFAD2</color>
+    <color name="LightGreen">#90EE90</color>
+    <color name="LightGrey">#D3D3D3</color>
+    <color name="LightPink">#FFB6C1</color>
+    <color name="LightSalmon">#FFA07A</color>
+    <color name="LightSeaGreen">#20B2AA</color>
+    <color name="LightSkyBlue">#87CEFA</color>
+    <color name="LightSlateGray">#778899</color>
+    <color name="LightSteelBlue">#B0C4DE</color>
+    <color name="LightYellow">#FFFFE0</color>
 </resources>

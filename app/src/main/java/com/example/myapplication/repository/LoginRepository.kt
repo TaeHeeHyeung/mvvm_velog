@@ -1,10 +1,12 @@
 package com.example.myapplication.repository
 
+import com.example.myapplication.enum.LoginState
 import com.example.myapplication.request.LoginRequest
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.lang.Exception
 import java.util.*
+/*
 
 sealed class Result<out R> {
     data class Success<out T>(val data: T) : Result<T>()
@@ -13,7 +15,8 @@ sealed class Result<out R> {
 
 class LoginRepository {
 
-    /*
+    */
+/*
     constructor(responseParser: LoginResponseParser)
      Function that makes the network request, blocking the current thread
     suspend fun makeLoginRequest(jsonBody: String): Result<LoginResponse> {
@@ -33,7 +36,8 @@ class LoginRepository {
      companion object {
         private const val loginUrl = "https://example.com/login"
     }
-    */
+    *//*
+
     //suspend: 백그라운드 쓰레드 처리 가정
     suspend fun makeLoginRequest(loginRequest: LoginRequest): Result<LoginResponse> {
         return withContext(Dispatchers.IO) {
@@ -49,7 +53,7 @@ class LoginRepository {
                 responseData =
                     if (loginRequest.userId.equals(loginId) && loginRequest.passWd.equals(passWd)) {
                         LoginResponse(
-                            LOGIN_SUCCESS,
+                            LoginState.LOGIN_SUCCESS,
                             "memberId",
                         )
                     } else {
@@ -66,4 +70,4 @@ class LoginRepository {
     }
 
 
-}
+}*/

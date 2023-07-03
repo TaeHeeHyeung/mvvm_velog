@@ -5,51 +5,45 @@ import androidx.annotation.StringRes
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import androidx.databinding.Observable
+import androidx.databinding.ObservableChar
+import androidx.databinding.ObservableInt
+import androidx.lifecycle.MutableLiveData
 import com.example.myapplication.R
 import com.example.myapplication.application.ApplicationTest
 
-// 로그인 상태 변수
-// 로그인 필요
-const val LOGIN_NEED: Int = 0
 
-// 로그인 실패
-const val LOGIN_FAIL: Int = 1
-
-// 로그인 성공
-const val LOGIN_SUCCESS: Int = 2
-
-// 아이디 존재 X
-const val LOGIN_CHECK_ID: Int = 3
-
-// 비밀번호 체크 X
-const val LOGIN_CHECK_PASS: Int = 4
+/*
 
 class LoginResponse(
-    var checkState: Int?,
-    var memberId: String?,
+
 ) : BaseObservable() {
 
-    fun toStringCheckState(): String {
-        return if (checkState == LOGIN_SUCCESS) {
-            "loginSuccess"
-        } else {
-            "loginFail"
-        }
-    }
+
+    var showInputNumberActivity: MutableLiveData<Boolean> = MutableLiveData(false)
+//    var memberId: ObservableChar = ObservableChar("")
+//    fun toStringCheckState(): String {
+//        return if (checkState == LOGIN_SUCCESS) {
+//            "loginSuccess"
+//        } else {
+//            "loginFail"
+//        }
+//    }
 
     @Bindable
     fun getWelcomeStr(): String {
-        return if (!TextUtils.isEmpty(memberId)) {
+        return if (!TextUtils.isEmpty(memberId.value)) {
             ApplicationTest.instance.resources.getString(
                 R.string.success_login,
-                memberId
+                memberId.value
             )
         } else {
             ApplicationTest.getResource().getString(R.string.need_login)
         }
     }
 
-    /*fun setData(result: Result.Success<LoginResponse>?) {
+
+    */
+/*fun setData(result: Result.Success<LoginResponse>?) {
         if (result == null) {
             username = ""
             passwd = ""
@@ -57,5 +51,6 @@ class LoginResponse(
             username = result.data.username
             passwd = result.data.passwd
         }
-    }*/
-}
+    }*//*
+
+}*/

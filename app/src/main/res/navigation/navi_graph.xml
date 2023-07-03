@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:name="com.example.myapplication.fragment.BlankFragment"
+    android:id="@+id/navi_graph"
     app:startDestination="@id/myPageFragment">
 
     <fragment
@@ -10,11 +10,21 @@
         android:name="com.example.myapplication.fragment.MyPageFragment"
         android:label="myPageFragment"
         tools:layout="@layout/fragment_my_page">
+
+        <!--
+        enter A-> B : B의 Animation
+        exit A-> B : A의 Animation
+        popEnter B-> A: A의 Animation
+        popExit B-> A: B의 Animation
+        -->
         <action
             android:id="@+id/action_myPageFragment_to_loginPageFragment"
             app:destination="@id/loginPageFragment"
             app:enterAnim="@anim/animation_enter_"
-            app:exitAnim="@anim/animation_exit" />
+            app:exitAnim="@anim/animation_remain"
+            app:popEnterAnim="@anim/animation_remain"
+            app:popExitAnim="@anim/animation_exit"
+            />
     </fragment>
 
     <fragment

@@ -19,12 +19,12 @@
 
         <!--로그인 화면 -->
         <LinearLayout
-            android:background="@color/Blue200"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:background="@color/Blue200"
             android:orientation="horizontal"
-            android:visibility='@{TextUtils.isEmpty(loginViewModel.mutableLiveDataLoginResponse.memberId) ?View.VISIBLE :View.GONE}'>
+            android:visibility='@{TextUtils.isEmpty(loginViewModel.loginLiveData.id) ?View.VISIBLE :View.GONE}'>
 
             <EditText
                 android:id="@+id/et_login_id"
